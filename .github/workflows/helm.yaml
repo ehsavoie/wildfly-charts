@@ -24,6 +24,15 @@ jobs:
         run: |
           git config user.name "$GITHUB_ACTOR"
           git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
+      - name: Prepare GPG key
+        run: |
+          keyring=keyring.gpg
+          base64 -d <<< "$GPG_KEYRING_BASE64" > "$keyring"
+          passphrase_file=passphrase-file.tx
+          echo "$GPG_PASSPHRASE" > passphrase-file.txt
+        env:
+          GPG_KEYRING_BASE64: "${{ secrets.GPG_KEYRING_BASE64 }}"
+          GPG_PASSPHRASE: "${{ secrets.GPG_PASSPHRASE }}"
 
       - name: Install Helm
         uses: azure/setup-helm@v1
@@ -31,8 +40,12 @@ jobs:
           version: v3.4.0
 
       - name: Run chart-releaser
-        uses: helm/chart-releaser-action@v1.1.0
-        with:
-          charts_repo_url: http://docs.wildfly.org/wildfly-charts/
+        uses: helm/chart-releaser-action@v1.6.0
+       # with:
+       #   charts_repo_url: http://docs.wildfly.org/wildfly-charts/
         env:
           CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+          CR_KEY: 72C04F9E7CBD2B0D
+          CR_KEYRING: keyring.gpg
+          CR_PASSPHRASE_FILE: passphrase-file.txt
+          CR_SIGN: true
