@@ -2,6 +2,38 @@ apiVersion: v1
 entries:
   wildfly:
   - annotations:
+      artifacthub.io/category: ApplicationServer
+      artifacthub.io/images: |
+        - name: builderImage
+          image: quay.io/wildfly/wildfly-s2i:latest
+        - name: runtimeImage
+          image: quay.io/wildfly/wildfly-runtime:latest
+      artifacthub.io/license: Apache-2.0
+      artifacthub.io/signKey: "fingerprint: E15B52A4F0910E4323D19C6772C04F9E7CBD2B0D\nurl:
+        https://keyserver.ubuntu.com   \n"
+      charts.openshift.io/name: WildFly
+      charts.openshift.io/provider: WildFly
+    apiVersion: v2
+    created: "2024-06-05T12:50:40.301575865Z"
+    dependencies:
+    - name: wildfly-common
+      repository: file://../wildfly-common
+      version: 2.2.0
+    description: Build and Deploy WildFly applications on OpenShift
+    digest: db4653fe71e4d2b5235ea1c3a74ab6967c4b74c499f1436ae4138a1a78811fef
+    home: https://wildfly.org
+    icon: https://design.jboss.org/wildfly/logo/final/wildfly_logomark_256px.png
+    kubeVersion: '>= 1.19.0-0'
+    maintainers:
+    - email: wildfly-dev@lists.jboss.org
+      name: WildFly
+      url: https://wildfly.org
+    name: wildfly
+    type: application
+    urls:
+    - https://github.com/ehsavoie/wildfly-charts/releases/download/wildfly-2.4.0/wildfly-2.4.0.tgz
+    version: 2.4.0
+  - annotations:
       charts.openshift.io/name: WildFly
       charts.openshift.io/provider: WildFly
     apiVersion: v2
@@ -410,6 +442,15 @@ entries:
     version: 1.0.0
   wildfly-common:
   - apiVersion: v2
+    created: "2024-06-05T12:50:40.466123205Z"
+    description: A library chart for WildFly-based applications
+    digest: fe34f6594a23a94b079c7eef474a3d56f7ce8ce1da6ca5622563d4cf68aea306
+    name: wildfly-common
+    type: library
+    urls:
+    - https://github.com/ehsavoie/wildfly-charts/releases/download/wildfly-common-2.2.0/wildfly-common-2.2.0.tgz
+    version: 2.2.0
+  - apiVersion: v2
     created: "2022-10-11T07:01:00.136172085Z"
     description: A library chart for WildFly-based applications
     digest: 97d67e34aa614d72d4685d80a7437c5230a6500bcfb8cf34b10cf61569a1325b
@@ -533,4 +574,4 @@ entries:
     urls:
     - https://github.com/wildfly/wildfly-charts/releases/download/wildfly-common-1.0.0/wildfly-common-1.0.0.tgz
     version: 1.0.0
-generated: "2021-03-09T10:42:06.703995832Z"
+generated: "2024-06-05T12:50:40.466319894Z"
