@@ -32,8 +32,12 @@ jobs:
       - name: List keys
         run: gpg -K
       - name: Export GPG key to legacy format
-        run: gpg --export-secret-keys > ~/.gnupg/pubring.gpg
-
+        run: |
+          echo "$GPG_PASSPHRASE" > "$passphrase_file"
+          less "$passphrase_file"
+          gpg  --batch --export-secret-keys > ~/.gnupg/pubring.gpg
+        env:
+          GPG_PASSPHRASE: "${{ secrets.GPG_PASSPHRASE }}"
       - name: Install Helm
         uses: azure/setup-helm@v1
         with:
