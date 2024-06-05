@@ -33,6 +33,7 @@ jobs:
         run: gpg -K
       - name: Export GPG key to legacy format
         run: |
+          passphrase_file = passphrase
           echo "$GPG_PASSPHRASE" > "$passphrase_file"
           less "$passphrase_file"
           gpg  --batch --export-secret-keys > ~/.gnupg/pubring.gpg
