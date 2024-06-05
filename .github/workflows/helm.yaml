@@ -31,11 +31,14 @@ jobs:
           passphrase: ${{ secrets.PASSPHRASE }}
       - name: List keys
         run: gpg -K
-      - name: Export GPG key to legacy format
+      - name: Prepare GPG key
         run: |
-          gpg --passphrase $GPG_PASSPHRASE --export-secret-keys --output /home/runner/.gnupg/pubring.gpg
+          keyring="/home/runner/.gnupg/pubring.gpg
+          base64 -d <<< "$GPG_KEYRING_BASE64" > "$keyring"
         env:
+          GPG_KEYRING_BASE64: "${{ secrets.GPG_KEYRING_BASE64 }}"
           GPG_PASSPHRASE: "${{ secrets.GPG_PASSPHRASE }}"
+
       - name: Install Helm
         uses: azure/setup-helm@v3.5
         with:
