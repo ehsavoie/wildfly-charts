@@ -33,10 +33,7 @@ jobs:
         run: gpg -K
       - name: Export GPG key to legacy format
         run: |
-          passphrase_file=passphrase
-          echo "$GPG_PASSPHRASE" > "$passphrase_file"
-          less "$passphrase_file"
-          gpg  --batch --export-secret-keys > ~/.gnupg/pubring.gpg
+          gpg --passphrase $GPG_PASSPHRASE --export-secret-keys > ~/.gnupg/pubring.gpg
         env:
           GPG_PASSPHRASE: "${{ secrets.GPG_PASSPHRASE }}"
       - name: Install Helm
